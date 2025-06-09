@@ -97,16 +97,6 @@ inputTags.addEventListener('keypress', async (event) => {
 
 const botaoPublicar = document.querySelector('.botao-publicar');
 
-botaoPublicar.addEventListener('click', async (event) => {
-	event.preventDefault();
-
-	const nomeDoProjeto = document.getElementById("nome").value;
-	const descricaoDoProjeto = document.getElementById("descricao").value;
-	const tagsProjetos = Array.from(listaTags.querySelectorAll('p')).map((tag) => tag.textContent);
-
-	console.log(nomeDoProjeto, descricaoDoProjeto, tagsProjetos);
-})
-
 //simulaco de envio de dados para o servidor
 async function publicarProjeto(nomeDoProjeto, descricaoDoProjeto, tagsProjetos) {
 	return new Promise((resolve, reject) => {
@@ -122,5 +112,25 @@ async function publicarProjeto(nomeDoProjeto, descricaoDoProjeto, tagsProjetos) 
 		}, 2000);
 	})
 }
+
+// Evento de clique no botão de publicar
+botaoPublicar.addEventListener('click', async (event) => {
+	event.preventDefault();
+
+	const nomeDoProjeto = document.getElementById("nome").value;
+	const descricaoDoProjeto = document.getElementById("descricao").value;
+	const tagsProjetos = Array.from(listaTags.querySelectorAll('p')).map((tag) => tag.textContent);
+
+	try{
+		const resultado = await publicarProjeto(nomeDoProjeto, descricaoDoProjeto, tagsProjetos);
+		console.log(resultado);
+		alert("Deu tudo certo!");
+	}
+	catch (error) {
+		console.log("Deu errado", error);
+		alert("Erro ao publicar o projeti");
+	}
+
+})
 
 
