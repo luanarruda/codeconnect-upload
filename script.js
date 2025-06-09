@@ -66,6 +66,7 @@ async function verificaTagsDisponiveis(tagTexto) {
 	});
 }
 
+//adicionar tags e validar
 inputTags.addEventListener('keypress', async (event) => {
 	if (event.key === 'Enter') {
 	  event.preventDefault();
@@ -93,5 +94,18 @@ inputTags.addEventListener('keypress', async (event) => {
 	  }
 	}
   });
+
+  const botaoPublicar = document.querySelector('.botao-publicar');
+
+  botaoPublicar.addEventListener('click', async(event) => {
+	event.preventDefault();
+
+	const nomeDoProjeto = document.getElementById("nome").value;
+	const descricaoDoProjeto = document.getElementById("descricao").value;
+	const tagsProjetos = Array.from(listaTags.querySelectorAll('p')).map((tag) => tag.textContent);
+
+	console.log(nomeDoProjeto, descricaoDoProjeto, tagsProjetos);
+  })
+
   
 
