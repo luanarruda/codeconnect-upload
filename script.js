@@ -66,3 +66,13 @@ listaTags.addEventListener('click', (event) => {
 		listaTags.removeChild(tagParaRemover);
 	}
 });
+
+//definir possiveis tags
+const tagsDisponiveis = ["Front-End", "Back-end", "Full-Stack", "JavaScript", "React", "Node.js", "HTML", "CSS", "Python", "Java", "C#", "PHP", "Swift", "TypeScript"];
+async function verificaTagsDisponiveis(tagTexto) {
+	return new Promise((resolve) => {	
+		setTimeout(() => {
+			resolve(tagsDisponiveis.includes(tagTexto));
+		},1000);
+})
+}
