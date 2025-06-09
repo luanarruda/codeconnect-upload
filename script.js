@@ -57,4 +57,12 @@ inputTags.addEventListener('keypress', (event) => {
 			tagsInput.value = '';
 		}
 	}
-})
+});
+
+//remover tags
+listaTags.addEventListener('click', (event) => {
+	if (event.target.classList.contains('remova-tag')) {
+		const tagParaRemover = event.target.parentElement;
+		listaTags.removeChild(tagParaRemover);
+	}
+});
