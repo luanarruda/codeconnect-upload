@@ -146,6 +146,7 @@ textarea {
 	color: var(--primary-color);
 	border: 1px solid var(--primary-color);
 	position: relative;
+	cursor: pointer;
 }
 
 .botao-descartar::after {
@@ -167,6 +168,7 @@ textarea {
 	color: var(--background-color);
 	border: none;
 	position: relative;
+	cursor: pointer;
 }
 
 .botao-publicar::after {
@@ -213,6 +215,7 @@ textarea {
 	font-weight: 600;
 	font-size: 10px;
 	position: relative;
+	cursor: pointer;
 }
 
 .container-upload-imagem button::after {
