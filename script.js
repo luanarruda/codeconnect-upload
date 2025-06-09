@@ -125,6 +125,13 @@ botaoPublicar.addEventListener('click', async (event) => {
 		const resultado = await publicarProjeto(nomeDoProjeto, descricaoDoProjeto, tagsProjetos);
 		console.log(resultado);
 		alert("Deu tudo certo!");
+
+		// Limpa o formulário
+		const formulario = document.querySelector("form");
+		formulario.reset();
+		imagemPrincipal.src = "./img/imagem1.png";
+		nomeDaImagem.textContent = "image_projeto.png";
+		listaTags.innerHTML = "";
 	}
 	catch (error) {
 		console.log("Deu errado", error);
@@ -133,4 +140,17 @@ botaoPublicar.addEventListener('click', async (event) => {
 
 })
 
+const botaoDescartar = document.querySelector(".botao-descartar");
+// Evento de clique no botão de descartar
+botaoDescartar.addEventListener('click', (event) => {
+	event.preventDefault();
+	
+	const formulario = document.querySelector("form");
+	formulario.reset();
+
+	imagemPrincipal.src = "./img/imagem1.png"; // Reseta a imagem principal
+	nomeDaImagem.textContent = "image_projeto.png"; // Reseta o nome da imagem
+
+	listaTags.innerHTML = ""; // Limpa a lista de tags
+});
 
