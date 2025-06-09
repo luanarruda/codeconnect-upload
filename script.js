@@ -11,7 +11,7 @@ function lerConteudoDoArquivo(arquivo) {
 		//responsavel por ler o arv q esta sendo recebido
 		const leitor = new FileReader();
 		leitor.onload = () => {
-			resolve({url: leitor.result, nome: arquivo.name});
+			resolve({ url: leitor.result, nome: arquivo.name });
 		}
 		leitor.onerror = () => {
 			reject(new Error('Erro ao ler o arquivo ${arquivo.name}'));
@@ -29,35 +29,23 @@ const nomeDaImagem = document.querySelector(".container-imagem-nome p");
 
 // Adiciona o FileReader ao input de upload
 inputUpload.addEventListener('change', async (event) => {
-    const arquivo = event.target.files[0];
+	const arquivo = event.target.files[0];
 
-    if (arquivo) {
-       try{
-		const conteudoDoArquivo = await lerConteudoDoArquivo(arquivo);
-		imagemPrincipal.src = conteudoDoArquivo.url;
-		nomeDaImagem.textContent = conteudoDoArquivo.nome;
-	   } catch (erro) {
-		   console.error("erro ao ler o arquivo:");
-	   }
-    }
+	if (arquivo) {
+		try {
+			const conteudoDoArquivo = await lerConteudoDoArquivo(arquivo);
+			imagemPrincipal.src = conteudoDoArquivo.url;
+			nomeDaImagem.textContent = conteudoDoArquivo.nome;
+		} catch (erro) {
+			console.error("erro ao ler o arquivo:");
+		}
+	}
 });
 
 const inputTags = document.getElementById('input-tags');
 const listaTags = document.getElementById('lista-tags');
 
-inputTags.addEventListener('keypress', (event) => {
-	if (event.key === 'Enter') {
-		event.preventDefault();
-		const tagTexto = inputTags.value.trim();
 
-		if (tagTexto !== '') {
-			const tagNova = document.createElement("li");
-			tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class= "remova-tag">`
-			listaTags.appendChild(tagNova);
-			tagsInput.value = '';
-		}
-	}
-});
 
 //remover tags
 listaTags.addEventListener('click', (event) => {
@@ -69,10 +57,41 @@ listaTags.addEventListener('click', (event) => {
 
 //definir possiveis tags
 const tagsDisponiveis = ["Front-End", "Back-end", "Full-Stack", "JavaScript", "React", "Node.js", "HTML", "CSS", "Python", "Java", "C#", "PHP", "Swift", "TypeScript"];
+
 async function verificaTagsDisponiveis(tagTexto) {
-	return new Promise((resolve) => {	
+	return new Promise((resolve) => {
 		setTimeout(() => {
-			resolve(tagsDisponiveis.includes(tagTexto));
-		},1000);
-})
+			resolve(tagsDisponiveis.map(tag => tag.toLowerCase()).includes(tagTexto.toLowerCase()));
+		}, 1000);
+	});
 }
+
+inputTags.addEventListener('keypress', async (event) => {
+	if (event.key === 'Enter') {
+	  event.preventDefault();
+	  const tagTexto = inputTags.value.trim();
+  
+	  if (tagTexto !== '') {
+		try {
+		  const tagExiste = await verificaTagsDisponiveis(tagTexto);
+  
+		  if (tagExiste) {
+			const tagOriginal = tagsDisponiveis.find(tag => tag.toLowerCase() === tagTexto.toLowerCase());
+			const tagNova = document.createElement("li");
+			tagNova.innerHTML = `<p>${tagOriginal}</p> <img src="./img/close-black.svg" class="remova-tag">`;
+			listaTags.appendChild(tagNova);
+			inputTags.value = '';
+		  } else {
+			alert("Tag não disponível. Por favor, escolha outra tag.");
+		  }
+  
+		} catch (error) {
+		  console.error("Erro ao verificar a tag:", error); // <-- Aqui você verá o erro real
+		  alert("Erro ao verificar existência da tag. Verifique o console!");
+		  return;
+		}
+	  }
+	}
+  });
+  
+
